@@ -1,0 +1,134 @@
+swagger: "2.0"
+info:
+  description: |
+    This is Brewdog Beer Recipes API.  You can find 
+    out more about Swagger at 
+    [http://swagger.io](http://swagger.io) or on 
+    [irc.freenode.net, #swagger](http://swagger.io/irc/).
+  version: 1.0.0
+  title: Punk API
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+# host: petstore.swagger.io
+# basePath: /v2
+tags:
+  - name: beers
+    description: Gets a beer from the api using the beers id or the list of beers with pagination.
+  - name: random
+    description: Gets a random beer from the API, this takes no paramaters.
+# schemes:
+# - http
+paths:
+  /beers:
+    get:
+      tags:
+        - beers
+      summary: Gets a list of beers with paginations
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: page
+          description: Page number
+          required: false
+          type: integer
+        - in: query
+          name: per_page
+          description: Number of objects per page
+          required: false
+          type: integer
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Beer"
+        404:
+          description: Beer with provided id not found
+        405:
+          description: Invalid input
+  /beers/{beerId}:
+    get:
+      tags:
+        - beers
+      summary: Gets a beer with certain id
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: beerId
+          description: Beer id
+          required: true
+          type: number
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Beer"
+        405:
+          description: Invalid input
+  /beers/random:
+    get:
+      tags:
+        - beers
+      summary: Gets a random beer from the API, this takes no paramaters.
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Beer"
+        405:
+          description: Invalid input
+
+definitions:
+  Beer:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      tagline:
+        type: string
+      first_brewed:
+        type: string
+      description:
+        type: string
+      image_url:
+        type: string
+      abv:
+        type: number
+        format: double
+      ibu:
+        type: number
+        format: double
+      target_fg:
+        type: number
+        format: double
+      target_og:
+        type: number
+        format: double
+      ebc:
+        type: number
+        format: double
+      srm:
+        type: number
+        format: double
+      ph:
+        type: number
+        format: double
+      pattenuation_level:
+        type: number
+        format: double
